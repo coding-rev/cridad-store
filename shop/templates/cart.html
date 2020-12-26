@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Cart - {% endblock %}
+{% block shop1 %} active {% endblock %}
+{% block shop2 %} active {% endblock %}
+{% load static %}
+{% block css %}  
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/nouislider/nouislider.css' %}">
+{% endblock %}
+
+{% block content %}
+                  
+        	<div class="page-header text-center" style="background-image: url({% static 'assets/images/page-header-bg.jpg' %})">
+        		<div class="container">
+        			<h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+
+                 {% if messages %}
+                    {% for message in messages %}
+                        <div  class="alert alert-{{message.tags }}" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}    
+
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'shop:index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'shop:shop' %}">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="cart">
+	                <div class="container">
+	                	<div class="row">
+	                		<div class="col-lg-9">
+	                			<table class="table table-cart table-mobile">
+									<thead>
+										<tr>
+											<th>Product</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Total</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+                                        <!--Item in Cart-->
+                                        {% for order_item in object.items.all %}
+										<tr>
+											<td class="product-col">
+												<div class="product">
+													<figure class="product-media">
+														<a href="#">
+															<img style="max-height: 70px;" src="{{order_item.item.photo.url}}" alt="Product image">
+														</a>
+													</figure>
+
+													<h3 class="product-title">
+														<a href="#">{{order_item.item.title}}</a>
+													</h3>
+												</div>
+											</td>
+											{% if order_item.item.discount %}
+                                                <td class="price-col">                                      &#8373;{{order_item.item.discount}} <br>
+                                                <del style="background: red;color: white;padding: 2%; font-size: 12px;font-weight: 600;border-radius: 5px;box-shadow: 1px 1px black">&#8373;{{order_item.item.price}}</del>
+                                                </td>
+                                            {% else %}
+                                                <td class="price-col">
+                                                    &#8373;{{order_item.item.price}}    
+                                                </td>    
+                                            {% endif %}
+
+											<td class="quantity-col">
+                                                <div style="display: flex;justify-content: space-between;padding: 2px 4px;border:1px solid grey" class="cart-product-quantity">
+
+                                                    <a href="{% url 'shop:remove_single_item_from_cart' order_item.item.id %}"><div class="qty_sub qty_button trans_200 text-center"><span>-</span></div></a>
+
+                                                        <span class="product_text product_num">{{order_item.quantity}}</span>
+
+                                                    <a href="{% url 'shop:add_single_item_from_cart' order_item.item.id %}"><div class="qty_add qty_button trans_200 text-center"><span>+</span></div></a>
+                                                </div>
+                                            </td>
+											
+                                            {% if order_item.item.discount %}
+                                                <td class="price-col">                                      &#8373;{{order_item.get_total_discount_item_price}} <br>
+                                                <i style="background: orange;color: white;padding: 2%; font-size: 12px;font-weight: 600;">saving: &#8373;{{order_item.get_amount_saved}}</i>
+                                                </td>
+                                            {% else %}
+                                                <td class="price-col">
+                                                    &#8373;{{order_item.get_total_item_price}}    
+                                                </td>    
+                                            {% endif %}
+
+
+											<td class="remove-col">
+                                                <button class="btn-remove">
+                                                <a href="{% url 'shop:remove-from-cart' order_item.item.pk %}">
+                                                    <i class="icon-close"></i>
+                                                </a>
+                                                </button>
+                                            </td>
+										</tr>
+                                        {% empty %}
+                                        <h4>Your cart is empty</h4>
+										<style>
+                                            table{
+                                                display: none;
+                                            }
+                                            .cart-discount{
+                                                display: none;
+                                            }
+                                            aside{
+                                                display: none;
+                                            }                              
+                                        </style>
+                                        <!--Item in Cart Ends here-->
+                                        {% endfor %}
+									</tbody>
+								</table><!-- End .table table-wishlist -->
+
+	                			<div class="cart-bottom">
+			            			<div class="cart-discount">
+			            				<form action="#">
+			            					<div class="input-group">
+				        						<input type="text" class="form-control" required placeholder="coupon code">
+				        						<div class="input-group-append">
+													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
+												</div><!-- .End .input-group-append -->
+			        						</div><!-- End .input-group -->
+			            				</form>
+			            			</div><!-- End .cart-discount -->
+
+			            			<a href="{% url 'shop:shop' %}" class="btn btn-outline-dark-2"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+		            			</div><!-- End .cart-bottom -->
+	                		</div><!-- End .col-lg-9 -->
+	                		<aside class="col-lg-3">
+	                			<div class="summary summary-cart">
+	                				<h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+	                				<table class="table table-summary">
+	                					<tbody>
+	                						<tr class="summary-subtotal">
+	                							<td>Subtotal:</td>
+	                							<td>&#8373; {{object.get_total}}</td>
+	                						</tr><!-- End .summary-subtotal -->
+	                						
+	                					</tbody>
+	                				</table><!-- End .table table-summary -->
+
+	                				<a href="{% url 'shop:checkout' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+	                			</div><!-- End .summary -->
+
+		            			<a href="{% url 'shop:shop' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+	                		</aside><!-- End .col-lg-3 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .cart -->
+            </div><!-- End .page-content -->
+{% endblock %}
+
+{% block js %}
+    
+    <script src="{% static 'assets/js/wNumb.js' %}"></script>
+    <script src="{% static 'assets/js/nouislider.min.js' %}"></script>
+{% endblock %}
+        

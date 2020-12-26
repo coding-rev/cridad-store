@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Wishlist  - {% endblock %}
+{% block shop1 %} active {% endblock %}
+{% block shop2 %} active {% endblock %}
+
+{% load static %}
+{% block css %}  
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/nouislider/nouislider.css' %}">
+{% endblock %}
+{% block content %}
+            <style>
+                #cartcart{
+                    display: none;
+                }
+            </style>
+
+        	<div class="page-header text-center" style="background-image: url({% static 'assets/images/page-header-bg.jpg' %})">
+        		<div class="container">
+        			<h1 class="page-title">Wishlist<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+
+                 {% if messages %}
+                    {% for message in messages %}
+                        <div  class="alert alert-{{message.tags }}" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}    
+
+
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'shop:index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'shop:shop' %}">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="container">
+					<table class="table table-wishlist table-mobile">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Price</th>
+								<th>Stock Status</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{% for wish_item in object.items.all %}
+                            <tr>
+								<td class="product-col">
+									<div class="product">
+										<figure class="product-media">
+											<a href="{% url 'shop:product-detail' wish_item.item.id %}">
+												<img src="{{wish_item.item.photo.url}}" alt="Product image">
+											</a>
+										</figure>
+
+										<h3 class="product-title">
+											<a href="#">{{wish_item.item.title}}</a>
+										</h3><!-- End .product-title -->
+									</div><!-- End .product -->
+								</td>
+								{% if wish_item.item.discount %}
+                                    <td class="price-col">                                      &#8373;{{wish_item.item.discount}} <br>
+                                        <del style="background: red;color: white;padding: 2%; font-size: 12px;font-weight: 600;border-radius: 5px;box-shadow: 1px 1px black">&#8373;{{wish_item.item.price}}</del>
+                                    </td>
+                                {% else %}
+                                    <td class="price-col">
+                                        &#8373;{{wish_item.item.price}}    
+                                    </td>    
+                                {% endif %}
+								<td class="stock-col"><span class="in-stock">In stock</span></td>
+								<td class="action-col">
+                                    <div class="dropdown">
+									<a href="{{wish_item.item.get_add_to_cart_url}}">
+                                    <button class="btn btn-block btn-outline-primary-2">
+                                        
+                                            Add to cart
+                                        
+                                    </button>
+                                    </a>
+								</td>
+								<td class="remove-col">
+                                    <button class="btn-remove">
+                                        <a href="{% url 'shop:remove-from-wish' wish_item.item.pk %}">
+                                            <i class="icon-close"></i>
+                                        </a>
+                                    </button>
+                                </td>
+							</tr>
+                            {% empty %}
+                                <h3 style="font-family: cambria;">Your wishlist is empty</h3>
+                                    <style>
+                                        table{
+                                            display: none;
+                                        }
+                                                                     
+                                    </style>
+                                    <!--Item in Cart Ends here-->
+                            {% endfor %}
+						</tbody>
+					</table><!-- End .table table-wishlist -->
+                    <a href="{% url 'shop:shop' %}" class="btn btn-outline-dark-2"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                    <div style="padding-bottom: 20px;"></div>
+	            	<div class="wishlist-share">
+	            		<div class="social-icons social-icons-sm mb-2">
+	            			<label class="social-label">Share on:</label>
+	    					<a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+	    					<a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+	    					<a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+	    					<a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+	    					<a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+	    				</div><!-- End .soial-icons -->
+	            	</div><!-- End .wishlist-share -->
+            	</div><!-- End .container -->
+            </div><!-- End .page-content -->
+{% endblock %}
+
+{% block js %}
+    
+    <script src="{% static 'assets/js/wNumb.js' %}"></script>
+    <script src="{% static 'assets/js/nouislider.min.js' %}"></script>
+{% endblock %}
