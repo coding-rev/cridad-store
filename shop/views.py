@@ -29,14 +29,13 @@ from django.contrib.auth.hashers import check_password
 @login_required
 def change_password(request):
     currentpassword = request.user.password #user's current password
-    print(currentpassword)
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('/user-dashboard')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -50,6 +49,7 @@ def Dashboard(request):
         items = Item.objects.all()
         order = Order.objects.get(user=request.user, ordered=False)
         wish = Wish.objects.get(user=request.user)
+        history = Billingshop.objects.filter(user=request.user)
         #Handling user profile update
         url = request.META.get('HTTP_REFERER')
         if request.method == 'POST':
@@ -68,14 +68,27 @@ def Dashboard(request):
                 "items":items,
                 "object":order,
                 'wish':wish,
+                'history':history,
                 'user_form': user_form,
             }
         return render(request, "dashboard.html", context)
 
     except:
+        user_form = UserUpdateForm(instance=request.user)
         items = Item.objects.all()
+        history = Billingshop.objects.filter(user=request.user)
+        url = request.META.get('HTTP_REFERER')
+        if request.method == 'POST':
+            user_form = UserUpdateForm(request.POST, instance=request.user)
+            
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, f'Your account has been updated!')
+                return HttpResponseRedirect(url)
         context = {
             "items":items,
+            'history':history,
+            'user_form': user_form,
         }
         return render(request, "dashboard.html", context)
 
@@ -209,12 +222,10 @@ class CheckoutView(View):
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
-        print(self.request.POST)
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
                 phone = form.cleaned_data.get('phone')
-                full_name = form.cleaned_data.get('full_name')
                 country = form.cleaned_data.get('country')
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
@@ -224,11 +235,9 @@ class CheckoutView(View):
                 # TODO: and functionality for these fields
                 #save_billing_address = form.cleaned_data.get('save_billing_address')
                 #save_info = form.cleaned_data.get('save_info')
-                
                 billing_address = Billingshop(
                     user=self.request.user,
                     phone=phone,
-                    full_name=full_name,
                     country=country,
                     street_address=street_address,
                     apartment_address=apartment_address,
@@ -236,11 +245,9 @@ class CheckoutView(View):
                     town=town,
                     postal=postal,
                 )
-                print(full_name,phone,country, street_address,apartment_address,region,town,postal)
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                #Redirecting according to payment option
                 return redirect("shop:payment")                    
             
             return redirect("shop:checkout")

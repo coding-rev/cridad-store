@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}  {% endblock %} Cridad. The leading online platform in west africa with the best and affordable goods.</title>
+    <title>{% block title %}  {% endblock %} Cridad. The leading online store in west africa with the best and affordable goods.</title>
     <meta name="keywords" content="cridad, online shopping, supplier, wholesaler, buy and sell, starting a business, wholesalers, online shop">
     <meta name="description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories.">
     <meta name="author" content="cridad">
@@ -18,7 +18,7 @@
     <meta property="og:site_name" content="cridad"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://www.cridad.com"/>
-    <meta name="twitter:image" content="assets/images/icons/logo.png"/>
+    <meta name="twitter:image" content="{% static 'assets/images/icons/logo.png' %}"/>
     <meta name="twitter:description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories."/>
     <meta property="og:image" content="{% static 'assets/images/icons/logo.png' %}"/>
     <meta name="fb:status" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories."/>
@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/logo.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/logo.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/logo.png' %}">
-    <link rel="mask-icon" href="{% static 'assets/images/icons/logo.png' %}" color="#666666">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/logo.png' %}">
     <link rel="shortcut icon" href="{% static 'assets/images/icons/logo.png' %}">
     <meta name="apple-mobile-web-app-title" content="Cridad">
     <meta name="application-name" content="Cridad">
@@ -105,26 +105,7 @@
 
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
-                                <li class="megamenu-container {% block index1 %} {% endblock %}">
-                                    <a href="{% url 'shop:index' %}" class="sf-with-ul">Home</a>
 
-                                    <div class="megamenu demo">
-                                        <div class="menu-col">
-                                            <div class="menu-title">Home Preview</div><!-- End .menu-title -->
-
-                                            <div class="demo-list">
-                                                
-                                                <div class="demo-item">
-                                                    <a href="{% url 'shop:index' %}">
-                                                        <span class="demo-bg" style="background-image: url({% static 'assets/images/menu/demos/3.jpg' %});"></span>
-                                                        <span class="demo-title">Home</span>
-                                                    </a>
-                                                </div><!-- End .demo-item -->
-
-                                        </div><!-- End .menu-col -->
-                                    </div><!-- End .megamenu -->
-                                </li>
-                                
                                 <li class="{% block shop1 %} {% endblock %}">
                                     <a href="{% url 'shop:shop' %}" class="sf-with-ul">Shop</a>
                                 </li>
@@ -138,7 +119,7 @@
                                                 <div class="menu-col">
                                                     <div class="menu-title">PROFILE</div><!-- End .menu-title -->
                                                     <ul>
-                                                        <li><a href=" ">
+                                                        <li><a href="/user-dashboard">
                                                             {% if user.is_authenticated %}
                                                                Hi {{user.username}}
                                                             {% else %}
@@ -151,7 +132,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="banner banner-overlay">
-                                                    <a href="">
+                                                    <a href="/user-dashboard">
                                                         <img src="{% static 'assets/images/menu/banner-2.jpg' %}" alt="Cridad">
 
                                                         <div class="banner-content banner-content-bottom">
@@ -167,18 +148,8 @@
                                         </div><!-- End .row -->
                                     </div><!-- End .megamenu megamenu-sm -->
                                 </li>
-                                                                
-                                <li>
-                                    <a href=" " class="sf-with-ul">Elements</a>
-
-                                    <ul>
-                                        <li><a href=" ">Products</a></li>
-                                        <li><a href="">Typography</a></li>
-                                        <li><a href="">Titles</a></li>
-                                        <li><a href="">Banners</a></li>
-                                   
-                                    </ul>
-                                </li>
+                                                              
+                               
                             </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->
                     </div><!-- End .header-left -->
@@ -200,13 +171,7 @@
                             </a>
                             
                         </div><!-- End .compare-dropdown -->
-
-                        <div class="cart-dropdown">
-                            <a href="{% url 'shop:wishlist-raw' %}" class="dropdown-toggle">
-                                <i style="font-size: 24px;" class="icon-heart-o"></i>
-                                <span class="cart-count">{{request.user|wish_item_count}}</span>
-                            </a>
-                        </div>    
+                           
                         {% if user.is_authenticated %}
                         <div class="cart-dropdown">
                             <a href="{% url 'shop:order-summary-raw' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -239,7 +204,7 @@
 
                                         <figure class="product-image-container">
                                             <a href="{% url 'shop:order-summary-raw' %}" class="product-image">
-                                                <img src="{{order_item.item.photo.url}}" alt="product">
+                                                <img style="max-height: 60px;" src="{{order_item.item.photo.url}}" alt="product">
                                             </a>
                                         </figure>
                                         <a href="{% url 'shop:remove-from-cart' order_item.item.pk %}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
@@ -287,6 +252,8 @@
         </header><!-- End .header -->
 
         <main class="main">
+            <div style="display: none;"> cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping </div>
+
         	  {% block content %} 
 
             
@@ -376,7 +343,7 @@
 
 	        <div class="footer-bottom">
 	        	<div class="container">
-	        		<p class="footer-copyright">Copyright © <script>document.write(new Date().getFullYear())</script> Cridad Store. All Rights Reserved.<br> Powered by <a href="https://emmjoy.netlify.com" style="color:blue;">Emmjoy Techies</a></p><!-- End .footer-copyright -->
+	        		<p class="footer-copyright">Copyright © <script>document.write(new Date().getFullYear())</script> Cridad Store. All Rights Reserved.</p><!-- End .footer-copyright -->
 	        		<figure class="footer-payments">
 	        			<img src="{% static 'assets/images/payments.png' %}" alt="Payment methods" width="272" height="20">
 	        		</figure><!-- End .footer-payments -->
@@ -401,11 +368,7 @@
             
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li class="{% block index2 %} {% endblock %}">
-                        <a href="{% url 'shop:index' %}">Home</a>
-
-                    </li>
-                    
+                                       
                     <li class="{% block shop2 %} {% endblock %}">
                         <a href="{% url 'shop:shop' %}">Shop</a>
                     </li>
@@ -417,51 +380,8 @@
                         </ul>
                     </li>
                     
-                    <li>
-                        <a href="#">Pages</a>
-                        <ul>
-                            <li>
-                                <a href="about.html">About</a>
-
-                                <ul>
-                                    <li><a href="about.html">About 01</a></li>
-                                    <li><a href="about-2.html">About 02</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="contact.html">Contact</a>
-
-                                <ul>
-                                    <li><a href="contact.html">Contact 01</a></li>
-                                    <li><a href="contact-2.html">Contact 02</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="faq.html">FAQs</a></li>
-                            <li><a href="404.html">Error 404</a></li>
-                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        <a href="elements-list.html">Elements</a>
-                        <ul>
-                            <li><a href="elements-products.html">Products</a></li>
-                            <li><a href="elements-typography.html">Typography</a></li>
-                            <li><a href="elements-titles.html">Titles</a></li>
-                            <li><a href="elements-banners.html">Banners</a></li>
-                            <li><a href="elements-product-category.html">Product Category</a></li>
-                            <li><a href="elements-video-banners.html">Video Banners</a></li>
-                            <li><a href="elements-buttons.html">Buttons</a></li>
-                            <li><a href="elements-accordions.html">Accordions</a></li>
-                            <li><a href="elements-tabs.html">Tabs</a></li>
-                            <li><a href="elements-testimonials.html">Testimonials</a></li>
-                            <li><a href="elements-blog-posts.html">Blog Posts</a></li>
-                            <li><a href="elements-portfolio.html">Portfolio</a></li>
-                            <li><a href="elements-cta.html">Call to Action</a></li>
-                            <li><a href="elements-icon-boxes.html">Icon Boxes</a></li>
-                        </ul>
-                    </li>
+                                      
+                   
                 </ul>
             </nav><!-- End .mobile-nav -->
 

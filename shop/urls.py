@@ -19,10 +19,10 @@ from .views import (
 app_name='shop'
 
 urlpatterns = [
-    path('',views.Home, name='index'),
+    #path('',views.Home, name='index'),
+    path('', views.Shop, name='shop'),
     path('item/addcomment/<int:pk>/', views.addcomment, name='addcomment'),
     path('user-dashboard/', views.Dashboard, name="dashboard"),
-    path('shop/', views.Shop, name='shop'),
     path('product-details/<int:pk>/', views.product_detail, name='product-detail'),
     path('product-detail/<int:pk>/', views.product_detail_for_login, name='login-product-detail'),
     path('payment/', PaymentView.as_view(), name='payment'),

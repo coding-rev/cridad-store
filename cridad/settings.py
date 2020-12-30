@@ -10,21 +10,20 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY=os.environ.get("miliz_ishop")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['cridadshop.herokuapp.com', 'www.cridad.com', 'cridad.com', '*']
+ALLOWED_HOSTS = ['cridadshop.herokuapp.com', 'www.cridad.com', 'cridad.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'register',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,7 +33,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'shop',
     'storages',
-    'register',
+    "paystack.frameworks.django",
+    
 ]
 
 MIDDLEWARE = [
@@ -55,6 +55,9 @@ TEMPLATES = [
         'DIRS': [TEMPLATE_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
+            "libraries": {
+                "paystack": "paystack.frameworks.django.templatetags.paystack"
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -66,6 +69,20 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cridad.wsgi.application'
+
+
+
+#Email for forget password
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "cridadgh@gmail.com"
+EMAIL_HOST_PASSWORD = os.environ.get("CRIDAD_EMAIL_PASSWORD")
+
+#DEFAULT_FROM_EMAIL = 'Cridad Support Team <noreply@example.com>'
 
 
 # Database
@@ -111,9 +128,24 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = "shop:index"
+LOGIN_REDIRECT_URL = "shop:shop"
 LOGIN_URL = "/login"
 LOGOUT_REDIRECT_URL = "/login"
+
+#Paystack Credentials
+#TEST
+#PAYSTACK_PUBLIC_KEY = 'pk_test_00a92d9e8ddfe626689a1afcfe7e7a92d7d94cca'
+#PAYSTACK_SECRET_KEY = 'sk_test_179bba0a1060ab30c807e53ebd1c0ee3c99756de'
+
+#LIVE KEYS
+#===============================================================
+PAYSTACK_PUBLIC_KEY = os.environ.get('CRIDAD_PAYSTACK_PUBLIC_KEY') 
+PAYSTACK_SECRET_KEY = os.environ.get('CRIDAD_PAYSTACK_SECRET_KEY') 
+
+PAYSTACK_FAILED_URL = "shop:checkout"
+PAYSTACK_SUCCESS_URL ="shop:shop"
+
+#=====================================================================
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'

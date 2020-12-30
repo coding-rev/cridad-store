@@ -186,7 +186,6 @@ class Order(models.Model):
 class Billingshop(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
@@ -195,6 +194,8 @@ class Billingshop(models.Model):
     town = models.CharField(max_length=100)
     postal = models.CharField(max_length=100)
 
-    
+    class Meta:
+        verbose_name_plural = 'BILLING ADDRESS'
+
     def __str__(self):
         return self.user.username

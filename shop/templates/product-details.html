@@ -24,7 +24,6 @@
 
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'shop:index' %}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{% url 'shop:shop' %}">Shop</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{item.title}}</li>
                     </ol>
@@ -161,14 +160,14 @@
                                     </div><!-- End .details-filter-row -->
 
                                     <div class="details-filter-row details-row-size">
-                                        <label for="size">Size:</label>
+                                        <label for="size">Brand:</label>
                                         <div class="select-custom">
                                             <select name="size" id="size" class="form-control">
-                                                <option value="#" selected="selected">{{item.size}}</option>
+                                                <option value="#" selected="selected">{{item.brand}}</option>
                                             </select>
                                         </div><!-- End .select-custom -->
 
-                                        <a class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                        <a class="size-guide"><i class="icon-th-list"></i>brand guide</a>
                                     </div><!-- End .details-filter-row -->
 
                                     {% else %}
@@ -188,8 +187,11 @@
                                     
 
                                     <div class="product-details-action">
-                                        <a href="{{item.get_add_to_cart_url}}" class="btn-product btn-cart"><span>add to cart</span></a>
-
+                                        {% if user.is_authenticated %}
+                                            <a href="{{item.get_add_to_cart_url}}" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        {% else %}
+                                            <a href="{% url 'shop:login-product-detail' item.id %}" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        {% endif %}
                                         <div class="details-action-wrapper">
                                             <a href="{{item.get_add_to_wish_url}}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                                             <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
@@ -370,8 +372,8 @@
 
                                 {% endif %}
                                 
-                                <a href="{% url 'shop:product-detail' other.id %}">
-                                    <img style="max-height: 200px" src="{{other.photo.url}}" alt="Product image" class="product-image">
+                                <a style="max-height: 200px" href="{% url 'shop:product-detail' other.id %}">
+                                    <img src="{{other.photo.url}}" alt="Product image" class="product-image">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -390,9 +392,18 @@
                                     <a href="#">{{other.brand}}</a>
                                 </div><!-- End .product-cat -->
                                 <h3 class="product-title"><a href="#">{{other.title}}</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $60.00
-                                </div><!-- End .product-price -->
+                                
+                                     {% if other.discount %}
+                                        <div class="product-price">
+                                            &#8373;{{other.discount}} <del style="color: red;padding-left: 3%"> &#8373;{{other.price}}</del>
+                                        </div><!-- End .product-price -->
+                                    {% else %}
+                                        <div class="product-price">
+                                            &#8373;{{other.price}}
+                                        </div><!-- End .product-price -->
+                                    {% endif %}
+
+
                                 <div class="ratings-container">
                                     
                                     <span class="ratings-text">
@@ -407,11 +418,11 @@
                                 </div><!-- End .rating-container -->
 
                                 <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                       <img style="max-height: 100px;" src="{{other.photo.url}}" alt="product desc">
+                                    <a style="max-height: 100px;" class="active">
+                                       <img src="{{other.photo.url}}" alt="product desc">
                                     </a>
-                                    <a href="#">
-                                        <img style="max-height: 100px;" src="{{other.photo_back.url}}" alt="product desc">
+                                    <a style="max-height: 100px;">
+                                        <img src="{{other.photo_back.url}}" alt="product desc">
                                     </a>
                                     
                                 </div><!-- End .product-nav -->

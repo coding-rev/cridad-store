@@ -9,6 +9,8 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ['status']
     random_fields = ('subject', 'comment', 'ip', 'user', 'item', 'rate')
 
+class BillingAdmin(admin.ModelAdmin):
+	list_display = ['user', 'phone', 'town']
 
 admin.site.site_header = 'Cridad Cpanel'
 admin.site.site_title = 'Cridad Cpanel'
@@ -24,4 +26,5 @@ admin.site.register(Category),
 admin.site.register(Item, ItemAdmin),
 admin.site.register(OrderItem),
 admin.site.register(Order),
+admin.site.register(Billingshop, BillingAdmin),
 

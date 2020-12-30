@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Shop  - {% endblock %}
+
 {% block shop1 %} active {% endblock %}
 {% block shop2 %} active {% endblock %}
 
@@ -14,7 +14,7 @@
 
         	<div class="page-header text-center" style="background-image: url({% static 'assets/images/page-header-bg.jpg' %})">
         		<div class="container">
-        			<h1 class="page-title">Cridad Shop <span>Shop</span></h1>
+        			<h1 class="page-title">Cridad Store</h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
@@ -31,7 +31,6 @@
 
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'shop:index' %}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Shop</li>
                         
                     </ol>
@@ -95,7 +94,7 @@
                                 				{% endif %}
                                                 <div id="responsiveimages">
                                                     <a href="{% url 'shop:product-detail' i.id %}">
-                                                        <img src="{{i.photo.url}}" alt="Cridad Product image" class="product-image">
+                                                        <img src="{{i.photo.url}}" alt="cridad store" class="product-image">
                                                     </a>
                                                 </div>
                                                 <style>

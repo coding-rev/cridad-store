@@ -9,16 +9,22 @@ from django.contrib import messages
 def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
-       # email = RegisterForm.EmailField()
         if form.is_valid():
+            email = form.cleaned_data['email']
+
             form.save()
-            #send_mail(
-            #    'Jays Detergents',
-            #    'Congratulations! you have successfully created an account.',
-            #    settings.EMAIL_HOST_USER,
-            #    [email],
-            #    fail_silently=False)
-           
+            subject = 'Welcome to Cridad Store'
+            message = """
+We are glad you've joined the cridad community. Thank you for choosing us. 
+Cridad Store was built with you in mind. Fully complete your profile, 
+explore the app and start making the best and affordable purchases in your comfort zone.
+
+To your success,
+Cridad Team
+"""
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email]
+            send_mail( subject, message, email_from, recipient_list, fail_silently=False)
             return redirect('/login')
     else:
         form = RegisterForm()
