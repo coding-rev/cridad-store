@@ -7,21 +7,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}  {% endblock %} Cridad. The leading online store in west africa with the best and affordable goods.</title>
+    <title>{% block title %}  {% endblock %} Cridad Store. The leading online store.</title>
     <meta name="keywords" content="cridad, online shopping, supplier, wholesaler, buy and sell, starting a business, wholesalers, online shop">
-    <meta name="description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories.">
+    <meta name="description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site..">
     <meta name="author" content="cridad">
     <meta name="twitter:creator" content="cridad">
     <meta name="twitter:site" content="cridad">
     <meta property="og:title" content="Cridad {{title}}"/>
-    <meta property="og:description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories." />
+    <meta property="og:description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site.." />
     <meta property="og:site_name" content="cridad"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://www.cridad.com"/>
     <meta name="twitter:image" content="{% static 'assets/images/icons/logo.png' %}"/>
-    <meta name="twitter:description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories."/>
+    <meta name="twitter:description" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site.."/>
     <meta property="og:image" content="{% static 'assets/images/icons/logo.png' %}"/>
-    <meta name="fb:status" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site, add to cart and proceed with the payment. Cridad, best in Food &amp; Beverages, Agriculture &amp; Farming, Industrial Appliances, Clothing Apparels Categories."/>
+    <meta name="fb:status" content="Cridad.com is Ghana&#x27;s most trusted and leading ecommerce platform for individuals who wish to get the best out of the numerous goods in market. Navigate through our site and find the needed product on our site.."/>
     <meta name="next-head-count" content="22"/>
 
     <!-- Favicon -->
@@ -75,10 +75,10 @@
                             <li>
                                 <a href="#">Links</a>
                                 <ul>
-                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +233 546 873 228</a></li>
+                                    <li><a href="tel:+233546873228"><i class="icon-phone"></i>+233 546873228</a></li>
                                     <li><a href="{% url 'shop:wishlist-raw' %}"><i class="icon-heart-o"></i>Wishlist <span>({{request.user|wish_item_count}})</span></a></li>
-                                    <li><a href="">About Us</a></li>
-                                    <li><a href="">Contact Us</a></li>
+                                    <li><a href="/login"><i class="icon-user"></i>About</a></li>
+                                    <li><a href="/login"><i class="icon-phone"></i>Contact us</a></li>
                                     {% if user.is_authenticated %}
                                         <li><a href="/logout"><i class="icon-user"></i>Logout</a></li>
                                     {% else %}
@@ -157,10 +157,10 @@
                     <div class="header-right">
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
+                            <form action="" method="get">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                    <input type="search" class="form-control" name="q" id="q" value="{{request.GET.q}}" placeholder="Search in...">
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
@@ -252,8 +252,7 @@
         </header><!-- End .header -->
 
         <main class="main">
-            <div style="display: none;"> cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping </div>
-
+            
         	  {% block content %} 
 
             
@@ -269,6 +268,15 @@
 
 
               {% endblock %}
+              <div style="display: none;"> cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad cridad store store store store store store store store store ghana ghana ghana ghana ghana ghana ghana ghana shop shop shop shop shop shop shopping shopping shopping shopping shopping shopping 
+            </div>
+
         </main><!-- End .main -->
 
         <footer class="footer">
@@ -362,7 +370,7 @@
 
             <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <input type="search" class="form-control" name="q" value="{{request.GET.q}}" id="mobile-search" placeholder="Search in...">
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
             

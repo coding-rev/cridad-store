@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, OrderItem, Order, Comment, Billingshop, Category
+from .models import Item, OrderItem, Order, Comment, Billingshop, Category, Advert, SubAdvert
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('title','brand','category','price','discount','photo')
@@ -21,6 +21,9 @@ admin.site.unregister(Group)
 
 
 # Register your models here.
+admin.site.register(Advert)
+admin.site.register(SubAdvert)
+
 admin.site.register(Comment, CommentAdmin),
 admin.site.register(Category),
 admin.site.register(Item, ItemAdmin),

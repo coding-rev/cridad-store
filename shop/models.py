@@ -24,6 +24,31 @@ SIZE_CHOICES = [
 	('XXL', 'XXL'),
 ]
 
+class Advert(models.Model):
+    picture = models.ImageField(upload_to='gallery/items')
+    mobile_pic = models.ImageField(default='mobile-slide.jpg' ,upload_to='gallery/items')
+    subject = models.CharField(max_length=12)
+    content = models.CharField(max_length=20)
+    other = models.CharField(max_length=8)
+
+    class Meta:
+        verbose_name_plural = 'ADVERTISEMENT SECTION'
+
+    def __str__(self):
+        return self.subject
+
+class SubAdvert(models.Model):
+    picture = models.ImageField(upload_to='gallery/items')
+    subject = models.CharField(max_length=12)
+    content = models.CharField(max_length=20)
+    other = models.CharField(max_length=8)
+
+    class Meta:
+        verbose_name_plural = 'SUB ADVERTS'
+
+    def __str__(self):
+        return self.subject
+
 class Category(models.Model):
 	category = models.CharField(max_length=20, unique=True)
 	def __str__(self):
@@ -34,6 +59,8 @@ class Item(models.Model):
     title = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='gallery/items')
     photo_back = models.ImageField(upload_to='gallery/items')
+    photo_three = models.ImageField(default='mobile-slide.jpg', upload_to='gallery/items')
+    photo_four = models.ImageField(default='mobile-slide.jpg', upload_to='gallery/items')
     price = models.FloatField()
     discount = models.FloatField(blank=True, null=True)
     color = models.CharField(max_length=100,blank=True, null=True)

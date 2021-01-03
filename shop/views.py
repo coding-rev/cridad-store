@@ -11,13 +11,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Wish, WishItem, Item, OrderItem, Order, Billingshop ,CommentForm, Comment, Category
+from .models import Advert, SubAdvert, Wish, WishItem, Item, OrderItem, Order, Billingshop ,CommentForm, Comment, Category
 
 from .forms import CheckoutForm, UserUpdateForm
 
@@ -108,26 +108,157 @@ def Home(request):
             "items":items,
         }
         return render(request, "index.html", context)
-	
-def Shop(request):
-    try:
-        items = Item.objects.all()
-        category = Category.objects.all()
-        order = Order.objects.get(user=request.user, ordered=False)
-        context = {
-            "items":items,
-            "category":category,
-            "object":order,
-        }
-        return render(request, "shop.html", context)
-    except:
-        items = Item.objects.all()
-        context = {
-            "items":items,
-            "category":category,
-        }
-        return render(request, "shop.html", context)
 
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
+def Shop(request):
+    # Section responsible for authenticated users
+    try:
+        print("AUTHENTICATED USER SIDE")
+        advert = Advert.objects.all()
+        subadvert = SubAdvert.objects.all()
+        items = Item.objects.all().order_by('-pk')
+        category = Category.objects.all().order_by('category')
+        order = Order.objects.get(user=request.user, ordered=False)
+
+        query = request.GET.get('q')
+        if query != None and query != "All":
+            order = Order.objects.get(user=request.user, ordered=False)
+            advert = Advert.objects.all()
+            subadvert = SubAdvert.objects.all()
+            others = Item.objects.all()
+            items = Item.objects.filter(
+                Q(brand__icontains=query)|
+                Q(title__icontains=query)|
+                Q(category__category__icontains=query)
+            
+            ).distinct()
+            # Responsible for Q item return
+            #Handling Pagination with function views
+            # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+            page = request.GET.get('page', 1)
+            paginator = Paginator(items, 1)
+            try:
+                items = paginator.page(page)
+            except PageNotAnInteger:
+                items = paginator.page(1)
+            except EmptyPage:
+                items = paginator.page(paginator.num_pages)
+
+            context = {
+                "items":items,
+                "others":others,
+                "category":category,
+                "object":order,
+                "advert":advert,
+                "subadvert":subadvert,
+            }
+            return render(request, "shop.html", context)
+
+        else:
+            #Handling Pagination with function views
+            # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+            page = request.GET.get('page', 1)
+            paginator = Paginator(items, 1)
+            try:
+                items = paginator.page(page)
+            except PageNotAnInteger:
+                items = paginator.page(1)
+            except EmptyPage:
+                items = paginator.page(paginator.num_pages)
+            
+            context = {
+                "items":items,
+                "category":category,
+                "object":order,
+                "advert":advert,
+                'subadvert':subadvert,
+            }
+            return render(request, "shop.html", context)
+    #Section responsible for unauthenticated users
+    except:
+        print("UNAUTHENTICATED USER SIDE")
+        query = request.GET.get('q')
+        # Handling Q search with if function
+        if query != None and query != "All":
+            try:
+                advert = Advert.objects.all()
+                subadvert = SubAdvert.objects.all()
+                others = Item.objects.all()
+                items = Item.objects.filter(
+                    Q(brand__icontains=query)|
+                    Q(title__icontains=query)|
+                    Q(category__category__icontains=query)
+                ).distinct()
+                # Responsible for Q item return
+                #Handling Pagination with function views
+                # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+                page = request.GET.get('page', 1)
+                paginator = Paginator(items, 1)
+                try:
+                    items = paginator.page(page)
+                except PageNotAnInteger:
+                    items = paginator.page(1)
+                except EmptyPage:
+                    items = paginator.page(paginator.num_pages)
+                
+                context = {
+                    "items":items,
+                    "others":others,
+                    "category":category,
+                    "advert":advert,
+                    "subadvert":subadvert,
+                }
+                return render(request, "shop.html", context)
+            except:
+                advert = Advert.objects.all()
+                subadvert = SubAdvert.objects.all()
+                items = Item.objects.all().order_by('-pk')
+                category = Category.objects.all().order_by('category')
+                #Handling Pagination with function views
+                # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+                page = request.GET.get('page', 1)
+                paginator = Paginator(items, 1)
+                try:
+                    items = paginator.page(page)
+                except PageNotAnInteger:
+                    items = paginator.page(1)
+                except EmptyPage:
+                    items = paginator.page(paginator.num_pages)
+                
+                context = {
+                    "items":items,
+                    "category":category,
+                    "advert":advert,
+                    "subadvert":subadvert,
+                }
+                return render(request, "shop.html", context)
+
+        # Handling else by rendering custom models
+        else:
+            advert = Advert.objects.all()
+            subadvert = SubAdvert.objects.all()
+            items = Item.objects.all().order_by('-pk')
+            category = Category.objects.all().order_by('category')
+            #Handling Pagination with function views
+            # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+            page = request.GET.get('page', 1)
+            paginator = Paginator(items, 1)
+            try:
+                items = paginator.page(page)
+            except PageNotAnInteger:
+                items = paginator.page(1)
+            except EmptyPage:
+                items = paginator.page(paginator.num_pages)
+                
+            context = {
+                "items":items,
+                "category":category,
+                "advert":advert,
+                "subadvert":subadvert,
+            }
+            return render(request, "shop.html", context)
+                
 
 def product_detail(request,pk):
     try:

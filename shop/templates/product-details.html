@@ -54,6 +54,22 @@
                                                 <i class="icon-arrows"></i>
                                             </a>
                                         </figure><!-- End .product-main-image -->
+                                         <!-- Third Main Image --> 
+                                        <figure class="product-main-image" id="main-picture-three">
+                                            <img style="max-height: 580px;" id="product-zoom" src="{{item.photo_three.url}}" data-zoom-image="{{item.photo_three.url}}" alt="product image">
+
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        </figure><!-- End .product-main-image -->
+                                         <!-- Fouth Main Image --> 
+                                        <figure class="product-main-image" id="main-picture-four">
+                                            <img style="max-height: 580px;" id="product-zoom" src="{{item.photo_four.url}}" data-zoom-image="{{item.photo_four.url}}" alt="product image">
+
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        </figure><!-- End .product-main-image -->
 
                                         <!--Main Images ends here -->
 
@@ -66,12 +82,12 @@
                                                 <img style="max-height: 90px;" src="{{item.photo_back.url}}" alt="product cross">
                                             </a>
 
-                                            <a onclick="picture_one();" href="#" class="product-gallery-item active" data-zoom-image="{{item.photo.url}}" style="max-height: 90px;">
-                                                <img style="max-height: 90px;" src="{{item.photo.url}}" alt="product with model">
+                                            <a onclick="picture_three();" href="#" class="product-gallery-item active" data-zoom-image="{{item.photo_three.url}}" style="max-height: 90px;">
+                                                <img style="max-height: 90px;" src="{{item.photo_three.url}}" alt="product with model">
                                             </a>
 
-                                            <a onclick="picture_two();" href="#" class="product-gallery-item active" style="max-height: 90px;">
-                                                <img style="max-height: 90px;" src="{{item.photo_back.url}}" alt="product back">
+                                            <a onclick="picture_four();" href="#" class="product-gallery-item active" style="max-height: 90px;">
+                                                <img style="max-height: 90px;" src="{{item.photo_four.url}}" alt="product back">
                                             </a>
 
                                         </div><!-- End .product-image-gallery -->
@@ -87,22 +103,58 @@
                                 #main-picture-two{
                                     display: none;
                                 }
+                                #main-picture-three{
+                                    display: none;
+                                }
+                                #main-picture-four{
+                                    display: none;
+                                }
                             </style>
 
                             <script>
                                 function picture_one(){
                                     var main_picture_one = document.querySelector("#main-picture-one");
                                     var main_picture_two = document.querySelector("#main-picture-two");
-                                    
+                                    var main_picture_three = document.querySelector("#main-picture-three");
+                                    var main_picture_four = document.querySelector("#main-picture-four");
+
                                     main_picture_one.style.display = "block";
-                                    main_picture_two.style.display = "none";    
+                                    main_picture_two.style.display = "none";
+                                    main_picture_three.style.display = "none";
+                                    main_picture_four.style.display = "none";    
                                 }
                                 function picture_two(){
                                     var main_picture_one = document.querySelector("#main-picture-one");
                                     var main_picture_two = document.querySelector("#main-picture-two");
+                                    var main_picture_three = document.querySelector("#main-picture-three");
+                                    var main_picture_four = document.querySelector("#main-picture-four");
 
                                     main_picture_one.style.display = "none";
                                     main_picture_two.style.display = "block";
+                                    main_picture_three.style.display = "none";
+                                    main_picture_four.style.display = "none";
+                                }
+                                function picture_three(){
+                                    var main_picture_one = document.querySelector("#main-picture-one");
+                                    var main_picture_two = document.querySelector("#main-picture-two");
+                                    var main_picture_three = document.querySelector("#main-picture-three");
+                                    var main_picture_four = document.querySelector("#main-picture-four");
+
+                                    main_picture_one.style.display = "none";
+                                    main_picture_two.style.display = "none";
+                                    main_picture_three.style.display = "block";
+                                    main_picture_four.style.display = "none";
+                                }
+                                function picture_four(){
+                                    var main_picture_one = document.querySelector("#main-picture-one");
+                                    var main_picture_two = document.querySelector("#main-picture-two");
+                                    var main_picture_three = document.querySelector("#main-picture-three");
+                                    var main_picture_four = document.querySelector("#main-picture-four");
+
+                                    main_picture_one.style.display = "none";
+                                    main_picture_two.style.display = "none";
+                                    main_picture_three.style.display = "none";
+                                    main_picture_four.style.display = "block";
                                 }
 
                             </script>
