@@ -114,7 +114,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def Shop(request):
     # Section responsible for authenticated users
     try:
-        print("AUTHENTICATED USER SIDE")
         advert = Advert.objects.all()
         subadvert = SubAdvert.objects.all()
         items = Item.objects.all().order_by('-pk')
@@ -132,12 +131,12 @@ def Shop(request):
                 Q(title__icontains=query)|
                 Q(category__category__icontains=query)
             
-            ).distinct()
+            )
             # Responsible for Q item return
             #Handling Pagination with function views
             # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
             page = request.GET.get('page', 1)
-            paginator = Paginator(items, 1)
+            paginator = Paginator(items, 80)
             try:
                 items = paginator.page(page)
             except PageNotAnInteger:
@@ -159,7 +158,7 @@ def Shop(request):
             #Handling Pagination with function views
             # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
             page = request.GET.get('page', 1)
-            paginator = Paginator(items, 1)
+            paginator = Paginator(items, 80)
             try:
                 items = paginator.page(page)
             except PageNotAnInteger:
@@ -177,7 +176,6 @@ def Shop(request):
             return render(request, "shop.html", context)
     #Section responsible for unauthenticated users
     except:
-        print("UNAUTHENTICATED USER SIDE")
         query = request.GET.get('q')
         # Handling Q search with if function
         if query != None and query != "All":
@@ -194,7 +192,7 @@ def Shop(request):
                 #Handling Pagination with function views
                 # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
                 page = request.GET.get('page', 1)
-                paginator = Paginator(items, 1)
+                paginator = Paginator(items, 80)
                 try:
                     items = paginator.page(page)
                 except PageNotAnInteger:
@@ -218,7 +216,7 @@ def Shop(request):
                 #Handling Pagination with function views
                 # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
                 page = request.GET.get('page', 1)
-                paginator = Paginator(items, 1)
+                paginator = Paginator(items, 80)
                 try:
                     items = paginator.page(page)
                 except PageNotAnInteger:
@@ -243,14 +241,14 @@ def Shop(request):
             #Handling Pagination with function views
             # 1. from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
             page = request.GET.get('page', 1)
-            paginator = Paginator(items, 1)
+            paginator = Paginator(items, 80)
             try:
                 items = paginator.page(page)
             except PageNotAnInteger:
                 items = paginator.page(1)
             except EmptyPage:
                 items = paginator.page(paginator.num_pages)
-                
+
             context = {
                 "items":items,
                 "category":category,

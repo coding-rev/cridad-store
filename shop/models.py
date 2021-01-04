@@ -15,15 +15,6 @@ LABEL_CHOICES =[
     ('Promo', 'Promo'),
 ]
 
-SIZE_CHOICES = [
-	('XS', 'XS'),
-	('S','S'),
-	('M', 'M'),
-	('L', 'L'),
-	('XL', 'XL'),
-	('XXL', 'XXL'),
-]
-
 class Advert(models.Model):
     picture = models.ImageField(upload_to='gallery/items')
     mobile_pic = models.ImageField(default='mobile-slide.jpg' ,upload_to='gallery/items')
@@ -69,7 +60,7 @@ class Item(models.Model):
     delivery_and_returns = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.CharField(max_length=20)
-    size = models.CharField(choices=SIZE_CHOICES, max_length=10, blank=True, null=True)
+    size = models.CharField(default="20" ,max_length=10, blank=True, null=True)
     label = models.CharField(choices=LABEL_CHOICES, max_length=30, blank=True, null=True)
     deal_of_the_day = models.BooleanField(default=False)
     

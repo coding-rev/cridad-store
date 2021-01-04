@@ -143,6 +143,12 @@
                             <div class="products mb-3">
                                 <div class="row justify-content-center">
                                     
+                                <div id="hideEmpty" class="col-12 col-md-12 col-lg-12">
+                                        <h6>No results for "{{request.GET.q}}". Can try a different keyword</h6>
+                                      <div>
+                                         <a style="font-size: 20px; background: orange; color:white; padding: 1% 3%;" href="{% url 'shop:shop' %}">Back Home</a>
+                                    </div>
+                                </div>
 
                                     <!--One item -->
                                 {% for i in items %}
@@ -234,100 +240,19 @@
                                             </div><!-- End .product-body -->
                                         </div><!-- End .product -->
                                     </div><!-- End .col-sm-6 col-lg-4 -->
+                                <style>
+                                    #hideEmpty{
+                                        display: none;
+                                    }
+                                </style>
 
                                 {% empty %}
-                                    <div class="col-12 col-md-12 col-lg-12">
-                                        <h6>No results for "{{request.GET.q}}". Can try a different keyword</h6>
-                                    </div>
-                                    {% for i in others %}
-                                       <div class="col-6 col-md-4 col-lg-4">
-                                        <div class="product product-7 text-center">
-                                            <figure class="product-media">
-                                               {% if i.label == "New" %}
-                                                    <span class="product-label label-new">New</span>
-                                                {% elif i.label == "Featured" %}
-                                                    <span class="product-label label-out">Featured</span>
-                                                {% elif i.label == "Promo" %}
-                                                    <span class="product-label label-top">Promo</span>
-                                                {% else %}
-
-                                                {% endif %}
-                                                <div id="responsiveimages">
-                                                    <a href="{% url 'shop:product-detail' i.id %}">
-                                                        <img src="{{i.photo.url}}" alt="cridad store" class="product-image">
-                                                    </a>
-                                                </div>
-                                                <style>
-                                                    #responsiveimages{
-                                                        max-height: 240px;
-                                                    }
-                                                    @media(max-width: 500px){
-                                                        #responsiveimages{
-                                                            max-height: 150px;
-                                                        }
-                                                    }
-                                                </style>
-                                                <div class="product-action-vertical">
-                                                    <a href="{{i.get_add_to_wish_url}}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                    <a href="{% url 'shop:product-detail' i.id %}" class="btn-product-icon btn-quickview" title="View"><span>Quick view</span></a>
-                                                </div><!-- End .product-action-vertical -->
-                                                {% if user.is_authenticated %}
-                                                    <div class="product-action">
-                                                        <a href="{{i.get_add_to_cart_url}}" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                {% else %}
-                                                    <div class="product-action">
-                                                        <a href="{% url 'shop:login-product-detail' i.id %}" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                {% endif %}
-
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">{{i.brand}}</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title">
-                                                    <a href="product.html">
-                                                        {{i.title}}
-                                                    </a>
-                                                </h3><!-- End .product-title -->
-
-                                                {% if i.discount %}
-                                                    <div class="product-price">
-                                                        &#8373;{{i.discount}} <del style="color: red;padding-left: 3%"> &#8373;{{i.price}}</del>
-                                                    </div><!-- End .product-price -->
-                                                {% else %}
-                                                    <div class="product-price">
-                                                        &#8373;{{i.price}}
-                                                    </div><!-- End .product-price -->
-                                                {% endif %}
-                                             <!--Review Section-->
-                                             <!--
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 70%;"></div>
-                                                    </div>
-                                                    <span class="ratings-text">( 2 Reviews )</span>
-                                                </div>
-                                             -->
-
-                                                <div class="product-nav product-nav-thumbs">
-                                                    <div style="height: 20px;">
-                                                        <a href="{% url 'shop:product-detail' i.id %}" class="active">
-                                                            <img src="{{i.photo.url}}" alt="product desc">
-                                                        </a>
-                                                    </div>
-                                                    <div style="height: 20px;">
-                                                        <a href="{% url 'shop:product-detail' i.id %}">
-                                                            <img src="{{i.photo_back.url}}" alt="product desc">
-                                                        </a>
-                                                    </div>
-                                                </div><!-- End .product-nav -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .col-sm-6 col-lg-4 --> 
-                                    {% endfor %}
+                                    <script>
+                                        //document.location.href = "{% url 'shop:shop' %}";
+                                        var hideEmpty = document.getElementById("hideEmpty");
+                                        hideEmpty.style.display = "block";
+                                    </script>
+                                    
                                 {% endfor %}
                                     
                                     
