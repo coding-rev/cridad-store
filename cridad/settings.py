@@ -17,7 +17,7 @@ SECRET_KEY=os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['cridadshop.herokuapp.com', 'www.cridad.com', 'cridad.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,7 +79,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "cridadgh@gmail.com"
+EMAIL_HOST_USER = os.environ.get("CRIDAD_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("CRIDAD_EMAIL_PASSWORD")
 
 #DEFAULT_FROM_EMAIL = 'Cridad Support Team <noreply@example.com>'
@@ -158,7 +158,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 # MEDIA responsible for pictures
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #MEDIA_URL = '/media/'
-MEDIA_URL = '//%s.s3.amazonaws.com/media/cridad-bucket/'
+MEDIA_URL = os.environ.get('AWS_URL')
 
 
 django_heroku.settings(locals())
