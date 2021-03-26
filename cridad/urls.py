@@ -49,7 +49,7 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('benedict/cridad-admin/', admin.site.urls),
     paystack_route,
     path('', include('shop.urls')),
     path('register/', v.register, name="register"),

@@ -24,7 +24,7 @@ Cridad Team
 """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [email]
-            send_mail( subject, message, email_from, recipient_list, fail_silently=False)
+            send_mail( subject, message, email_from, recipient_list, fail_silently=True)
             return redirect('/login')
     else:
         form = RegisterForm()
